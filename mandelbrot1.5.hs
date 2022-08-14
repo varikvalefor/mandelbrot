@@ -3,6 +3,7 @@ import Data.List;
 import System.IO;
 import Data.Complex;
 import Data.List.Split;
+import Data.Double;
 import System.Environment;
 
 main = hSetBuffering stdout NoBuffering >> getArgs >>= \(w:h:it:xmin:xmax:ymin:ymax:_) -> putStrLn ("P1\n" ++ w ++ " " ++ h) >> (mapM_ putChar {- (\a -> mapM_ putChar a >> putStrLn "") $ chunksOf (read w) -} $ (drawMandelbrot (read w) (read h) (read it) 2 (read xmin,read xmax) (read ymin,read ymax)));
@@ -29,7 +30,9 @@ drawMandelbrot :: Int
                -> String;
 drawMandelbrot w' h' i t r m = toString $ map inSet numList
   where
-  numList = map toComplex [(b,a) | a <- reverse [1,2..h], b <- [1,2..w]]
+  numList = map toComplex $ zip yCoords xCoords
+  xCoords = [1,2..w]
+  yCoords = [1,2..h]
   inSet c = not $ any ((>= t) . magnitude) $ take i $ iterate ((+c) . (**2)) 0
   toString = init . unlines . chunksOf w' . map (bool ' ' '█')
   toComplex (a,b) = m1 :+ m2
