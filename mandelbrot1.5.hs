@@ -18,7 +18,7 @@ drawMandelbrot :: Int
                -- ^ This argvment is the number of iterations.
                -> Double
                -- ^ This argument is the threshold of "hey, this thing
-	       -- isn't in the set."
+               -- isn't in the set."
                -> (Double, Double)
                -- ^ This tuple contains the beginning of the real range
                -- and the end of the real range, respectively.
