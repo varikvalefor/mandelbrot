@@ -3,7 +3,6 @@ import Data.List;
 import System.IO;
 import Data.Complex;
 import Data.List.Split;
-import Data.Double;
 import System.Environment;
 
 main = hSetBuffering stdout NoBuffering >> getArgs >>= \(w:h:it:xmin:xmax:ymin:ymax:_) -> putStrLn ("P1\n" ++ w ++ " " ++ h) >> (mapM_ putChar {- (\a -> mapM_ putChar a >> putStrLn "") $ chunksOf (read w) -} $ (drawMandelbrot (read w) (read h) (read it) 2 (read xmin,read xmax) (read ymin,read ymax)));
@@ -16,7 +15,7 @@ drawMandelbrot :: Int
                -> Int
                -- ^ This argument is the height of the output image.
                -> Int
-               -- ^ This argvment is the number of iterations.
+               -- ^ This argument is the number of iterations.
                -> Double
                -- ^ This argument is the threshold of "hey, this thing
                -- isn't in the set."
@@ -56,4 +55,5 @@ inMandelbrotSet :: Complex Double
                 -- MANDELBROT function of the first argument tends to
                 -- infinity.
                 -> Bool;
-inMandelbrotSet c t i = not $ any ((>= t) . magnitude) $ take i $ iterate ((+c) . (**2)) 0;
+inMandelbrotSet c t i = not $ any ((>= t) . magnitude) $ take i $ iters
+  where iters = iterate ((+c) . (**2)) 0;
