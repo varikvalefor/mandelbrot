@@ -2,6 +2,7 @@ import Data.Bool;
 import Data.List;
 import System.IO;
 import Data.Complex;
+import Control.Monad;
 import Data.List.Split;
 import System.Environment;
 
@@ -29,7 +30,7 @@ drawMandelbrot :: Int
                -> String;
 drawMandelbrot w' h' i t r m = toString $ map inSet numList
   where
-  numList = map toComplex $ zip yCoords xCoords
+  numList = map toComplex $ liftM2 (,) yCoords xCoords
   inSet a = inMandelbrotSet a t i
   xCoords = [1,2..w]
   yCoords = [1,2..h]
