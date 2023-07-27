@@ -5,9 +5,19 @@ import Data.Complex;
 import Control.Monad;
 import Data.List.Split;
 import System.Environment;
+import System.OpenBSD.Plegg;
 
-main = hSetBuffering stdout NoBuffering >> getArgs >>= \(w:h:it:xmin:xmax:ymin:ymax:_) -> putStrLn ("P1\n" ++ w ++ " " ++ h) >> (mapM_ putChar {- (\a -> mapM_ putChar a >> putStrLn "") $ chunksOf (read w) -} $ (drawMandelbrot (read w) (read h) (read it) 2 (read xmin,read xmax) (read ymin,read ymax)));
---main = hSetBuffering stdout NoBuffering >> getArgs >>= \(w:h:it:xmin:xmax:ymin:ymax:_) -> putStrLn ("P1\n" ++ w ++ " " ++ h) >> (mapM_ putChar (drawMandelbrot (read w) (read h) (read it) 2 (read xmin,read xmax) (read ymin,read ymax)));
+main = security >> nobuf >> getArgs >>= runWithArgs
+  where
+  security = plegg [Stdio] >> univac []
+  nobuf = hSetBuffering stdout NoBuffering >> getArgs 
+  runWithArgs (w:h:it:xmin:xmax:ymin:ymax:_) = printDebug >> printReal
+    where
+    xr = (read xmin, read xmax)
+    yr = (read ymin, read ymax)
+    printDebug = putStrLn $ "P1\n" ++ w ++ " " ++ h
+    howie = drawMandelbrot (read w) (read h) (read it) 2 xr yr
+    printReal = mapM_ putChar howie;
 
 -- | @drawMandelbrot@ outputs a 1-bit 'String'-based bitmap image which
 -- represents complex numbers' membership of the MANDELBROT set.
