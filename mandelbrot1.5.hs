@@ -45,7 +45,7 @@ drawMandelbrot w' h' i t r m = toString $ map inSet numList
   xCoords = [1,2..w]
   yCoords = [1,2..h]
   toString = init . unlines . chunksOf w' . map (bool ' ' '█')
-  toComplex (a,b) = m1 :+ m2
+  toComplex (b,a) = m1 :+ m2
     where
     m1 = fst r + (a / w) * (snd r - fst r)
     m2 = fst m + (b / h) * (snd m - fst m)
