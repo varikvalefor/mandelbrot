@@ -13,11 +13,12 @@ main = security >> nobuf >> getArgs >>= runWithArgs
   nobuf = hSetBuffering stdout NoBuffering
   runWithArgs (w:h:it:xmin:xmax:ymin:ymax:_) = printDebug >> printReal
     where
-    xr = (read xmin, read xmax)
-    yr = (read ymin, read ymax)
     printDebug = putStrLn $ "P1\n" ++ w ++ " " ++ h
-    howie = drawMandelbrot (read w) (read h) (read it) 2 xr yr
-    printReal = mapM_ putChar howie;
+    printReal = mapM_ putChar howie
+      where
+      xr = (read xmin, read xmax)
+      yr = (read ymin, read ymax)
+      howie = drawMandelbrot (read w) (read h) (read it) 2 xr yr;
 
 -- | @drawMandelbrot@ outputs a 1-bit 'String'-based bitmap image which
 -- represents complex numbers' membership of the MANDELBROT set.
