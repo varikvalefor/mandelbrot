@@ -10,7 +10,7 @@ import System.OpenBSD.Plegg;
 main = security >> nobuf >> getArgs >>= runWithArgs
   where
   security = plegg [Stdio] >> univac []
-  nobuf = hSetBuffering stdout NoBuffering >> getArgs 
+  nobuf = hSetBuffering stdout NoBuffering
   runWithArgs (w:h:it:xmin:xmax:ymin:ymax:_) = printDebug >> printReal
     where
     xr = (read xmin, read xmax)
