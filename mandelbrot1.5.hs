@@ -7,6 +7,7 @@ import Data.List.Split;
 import System.Environment;
 import System.OpenBSD.Plegg;
 
+main :: IO ()
 main = security >> nobuf >> getArgs >>= runWithArgs
   where
   security = plegg [Stdio] >> univac []
