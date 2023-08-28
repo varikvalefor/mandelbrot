@@ -74,9 +74,6 @@ mandelbrotIndex :: Complex Double
                 -> Maybe Int;
 mandelbrotIndex c t i = jm $ map check $ zip [0..] $ take i $ iters
   where
-  jm = headMaybe . catMaybes
-    where
-    headMaybe (x : _) = Just x
-    headMaybe [] = Nothing
+  jm = listToMaybe . catMaybes
   check (a , b) = if magnitude b > t then Just a else Nothing
   iters = iterate ((+c) . (**2)) 0;
