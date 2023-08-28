@@ -1,6 +1,7 @@
 import Data.Bool;
 import Data.List;
 import System.IO;
+import Data.Maybe;
 import Data.Complex;
 import Control.Monad;
 import Data.List.Split;
@@ -43,7 +44,7 @@ drawMandelbrot :: Int
 drawMandelbrot w' h' i t r m = toString $ map inSet numList
   where
   numList = map toComplex $ liftM2 (,) yCoords xCoords
-  inSet a = inMandelbrotSet a t i
+  inSet a = isNothing $ mandelbrotIndex a t i
   xCoords = [1..w]
   yCoords = [1..h]
   toString = unlines . chunksOf w' . map (bool ' ' '█')
@@ -53,10 +54,13 @@ drawMandelbrot w' h' i t r m = toString $ map inSet numList
     m2 = fst m + (b / h) * (snd m - fst m)
   [w, h] = map fromIntegral [w', h'];
 
--- @inMandelbrotSet t d k@ iff MANDELBROT function of @t@ exceeds @d@
--- within @k@ iterations.
-inMandelbrotSet :: Complex Double
-                -- ^ @inMandelbrotSet@ determines whether or not this
+-- If some element of the @take@ thing indicates that @c@ is an
+-- element of the MANDELBROT set, then @mandelbrotIndex c t i@ is 'Just'
+-- the index of the thing which indicates that @c@ is an element of the
+-- MANDELBROT set.  If no element of the @take@ thing indicates, then
+-- @mandelbrotIndex c t i@ is 'Nothing'.
+mandelbrotIndex :: Complex Double
+                -- ^ @mandelbrotIndex@ determines whether or not this
                 -- number is in the MANDELBROT set.
                 -> Double
                 -- ^ This number is the threshold which is used to
@@ -67,6 +71,12 @@ inMandelbrotSet :: Complex Double
                 -- which are used to determine whether or not the
                 -- MANDELBROT function of the first argument tends to
                 -- infinity.
-                -> Bool;
-inMandelbrotSet c t i = not $ any ((>= t) . magnitude) $ take i $ iters
-  where iters = iterate ((+c) . (**2)) 0;
+                -> Maybe Int;
+mandelbrotIndex c t i = jm $ map check $ zip [0..] $ take i $ iters
+  where
+  jm = headMaybe . catMaybes
+    where
+    headMaybe (x : _) = Just x
+    headMaybe [] = Nothing
+  check (a , b) = if magnitude b > t then Just a else Nothing
+  iters = iterate ((+c) . (**2)) 0;
