@@ -43,16 +43,17 @@ drawMandelbrot :: Int
                -> String;
 drawMandelbrot w' h' i t r m = toString $ map inSet numList
   where
-  numList = map toComplex $ liftM2 (,) yCoords xCoords
   inSet a = isNothing $ mandelbrotIndex a t i
-  xCoords = [1..w]
-  yCoords = [1..h]
   toString = unlines . chunksOf w' . map (bool ' ' '█')
-  toComplex (b,a) = m1 :+ m2
+  numList = map toComplex $ liftM2 (,) yCoords xCoords
     where
-    m1 = fst r + (a / w) * (snd r - fst r)
-    m2 = fst m + (b / h) * (snd m - fst m)
-  [w, h] = map fromIntegral [w', h'];
+    xCoords = [1..w]
+    yCoords = [1..h]
+    [w, h] = map fromIntegral [w', h'];
+    toComplex (b,a) = m1 :+ m2
+      where
+      m1 = fst r + (a / w) * (snd r - fst r)
+      m2 = fst m + (b / h) * (snd m - fst m)
 
 -- If some element of the @take@ thing indicates that @c@ is an
 -- element of the MANDELBROT set, then @mandelbrotIndex c t i@ is 'Just'
