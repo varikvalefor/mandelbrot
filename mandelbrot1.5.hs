@@ -43,9 +43,7 @@ drawMandelbrot :: Int
                -> String;
 drawMandelbrot w' h' i t r m = toString $ map inSet numList
   where
-  inSet a = Just True == fmap isEven (mandelbrotIndex a t i)
-    where
-    isEven = (==) 0 . flip mod 2
+  inSet a = Just True == fmap even (mandelbrotIndex a t i)
   toString = unlines . chunksOf w' . map (bool ' ' '█')
   numList = map toComplex $ liftM2 (,) yCoords xCoords
     where
