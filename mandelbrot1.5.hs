@@ -57,7 +57,7 @@ drawMandelbrot w' h' i t r m = toString $ map inSet numList
       m1 = fst r + (a / w) * (snd r - fst r)
       m2 = fst m + (b / h) * (snd m - fst m)
 
--- If some element of the @take@ thing indicates that @c@ is an
+-- | If some element of the @take@ thing indicates that @c@ is an
 -- element of the MANDELBROT set, then @mandelbrotIndex c t i@ is 'Just'
 -- the index of the thing which indicates that @c@ is an element of the
 -- MANDELBROT set.  If no element of the @take@ thing indicates, then
@@ -78,5 +78,5 @@ mandelbrotIndex :: Complex Double
 mandelbrotIndex c t i = jm $ map check $ zip [0..] $ take i $ iters
   where
   jm = listToMaybe . catMaybes
-  check (a , b) = if magnitude b > t then Just a else Nothing
+  check (a , b) = if magnitude b >= t then Just a else Nothing
   iters = iterate ((+c) . (**2)) 0;
