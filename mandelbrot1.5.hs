@@ -34,11 +34,11 @@ drawMandelbrot :: Int
                -- ^ This argument is the threshold of "hey, this thing
                -- isn't in the set."
                -> (Double, Double)
-               -- ^ This tuple contains the beginning of the real range
-               -- and the end of the real range, respectively.
+               -- ^ This tuple contains the beginning (of the real
+	       -- range) and the end of the real range, respectively.
                -> (Double, Double)
-               -- ^ This tuple contains the beginning of the imaginary
-               -- range and the end of the imaginary range,
+               -- ^ This tuple contains the beginning (of the imaginary
+               -- range) and the end of the imaginary range,
                -- respectively.
                -> String;
 drawMandelbrot w' h' i t r m = toString $ map inSet numList
