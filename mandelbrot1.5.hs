@@ -77,4 +77,4 @@ mandelbrotIndex c t i = jm $ map check $ zip [0..] $ take i $ iters
   where
   jm = listToMaybe . catMaybes
   check (a , b) = if magnitude b >= t then Just a else Nothing
-  iters = iterate ((+c) . (**2)) 0;
+  iters = flip iterate 0 $ (+c) . (**2);
