@@ -35,7 +35,7 @@ drawMandelbrot :: Int
                -- isn't in the set."
                -> (Double, Double)
                -- ^ This tuple contains the beginning (of the real
-	       -- range) and the end of the real range, respectively.
+               -- range) and the end of the real range, respectively.
                -> (Double, Double)
                -- ^ This tuple contains the beginning (of the imaginary
                -- range) and the end of the imaginary range,
