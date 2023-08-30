@@ -13,9 +13,9 @@ main = security >> nobuf >> getArgs >>= runWithArgs
   where
   security = plegg [Stdio] >> univac []
   nobuf = hSetBuffering stdout NoBuffering
-  runWithArgs (w:h:it:xmin:xmax:ymin:ymax:_) = printDebug >> printReal
+  runWithArgs (w:h:it:xmin:xmax:ymin:ymax:_) = printXpm >> printReal
     where
-    printDebug = putStrLn $ "P1\n" ++ w ++ " " ++ h
+    printXpm = putStrLn $ "P1\n" ++ w ++ " " ++ h
     printReal = mapM_ putChar howie
       where
       xr = (read xmin, read xmax)
