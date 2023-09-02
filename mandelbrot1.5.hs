@@ -55,11 +55,11 @@ drawMandelbrot w' h' i t r m = toString $ map inSet numList
       m1 = fst r + (a / w) * (snd r - fst r)
       m2 = fst m + (b / h) * (snd m - fst m);
 
--- | If some element of the @take@ thing indicates that @c@ is an
+-- | If some element of the @take@ thing indicates that @c@ is not an
 -- element of the MANDELBROT set, then @mandelbrotIndex c t i@ is 'Just'
--- the index of the thing which indicates that @c@ is an element of the
--- MANDELBROT set.  If no element of the @take@ thing indicates, then
--- @mandelbrotIndex c t i@ is 'Nothing'.
+-- the index of the thing which indicates that @c@ is not an element of
+-- the MANDELBROT set.  If no element of the @take@ thing indicates,
+-- then @mandelbrotIndex c t i@ is 'Nothing'.
 mandelbrotIndex :: Complex Double
                 -- ^ @mandelbrotIndex@ determines whether or not this
                 -- number is in the MANDELBROT set.
